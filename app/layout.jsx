@@ -9,6 +9,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Lenis from "@/components/Lenis";
+import BackgroundMusic from "@/components/Aud";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +61,11 @@ export default function RootLayout({ children }) {
             <>
               <HeaderSM />
               <HeaderLG />
+              <div className="fixed bottom-t left-5 z-50">
+                <BackgroundMusic />
+              </div>
               <main className="flex-1 w-full">{children}</main>
+              <Footer />
             </>
           )}
         </div>

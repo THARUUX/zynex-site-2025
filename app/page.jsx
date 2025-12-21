@@ -24,8 +24,13 @@ import { SiBlender } from "react-icons/si";
 import { SiNextdotjs } from "react-icons/si";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import GradientBg from "@/components/GradientBg";
+import FloatingLines from "@/components/ui/FloatingLines";
 
 gsap.registerPlugin(ScrollTrigger);
+
+import ModelLogo from "@/components/ModelLogo";
+import DarkVeil from "@/components/ui/DarkVeil";
+import LightRays from "@/components/ui/LightRays";
 
 function Model() {
   const gltf = useGLTF("/f1.glb");
@@ -249,6 +254,54 @@ export default function Home() {
   return (
     <div>
       <div className="max-w-screen overflow-hidden flex flex-col items-center justify-center orbitron-400 min-h-screen w-full relative">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#AE00FF"
+          raysSpeed={1.5}
+          lightSpread={2}
+          rayLength={3}
+          followMouse={true}
+          mouseInfluence={0.1}
+          noiseAmount={0.1}
+          distortion={0.05}
+          className="h-screen w-full"
+
+        />
+        {/* <DarkVeil/> */}
+        {/* <FloatingLines
+          className="z-0"
+          linesGradient={[
+            '#AE00FF',
+            '#4000FF',
+            '#AE00FF',
+            '#4000FF',
+            '#AE00FF',
+            '#4000FF',
+            '#AE00FF',
+            '#4000FF',
+          ]}
+          enabledWaves={['top', 'middle', 'bottom']}
+          lineCount={[2, 5, 2]}
+          lineDistance={[5, 5, 5]}
+          topWavePosition={{ x: 10.0, y: 0.5, rotate: -0.4 }}
+          middleWavePosition={{ x: 5.0, y: 0.0, rotate: 0.2 }}
+          bottomWavePosition={{ x: 2.0, y: -0.7, rotate: 0.4 }}
+          animationSpeed={1}
+          interactive={true}
+          bendRadius={5.0}
+          bendStrength={-0.5}
+          mouseDamping={0.05}
+          parallax={true}
+          parallaxStrength={0.2}
+          mixBlendMode='screen'
+        /> */}
+        {/* <Canvas dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} camera={{ position: [0, 0, 0], fov: 20 }}>
+          <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
+
+
+          <ModelLogo />
+          <OrbitControls enableZoom={true} enablePan={false} enableRotate={false} />
+        </Canvas> */}
         {/* Spline Background */}
         {/* <div className="absolute inset-0 z-0">
           <Spline
@@ -258,9 +311,9 @@ export default function Home() {
         </div> */}
 
         {/* Overlay gradient */}
-      <div className="absolute bottom-0 inset-x-0 z-10 h-80 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 z-10 h-80 bg-gradient-to-t from-black to-transparent pointer-events-none" />
 
-        <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="" className="absolute orbitron-400 w-full   items-center  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col justify-center mt-20">
+        {/* <div data-aos="fade-in" data-aos-duration="1000" data-aos-delay="" className="absolute orbitron-400 w-full   items-center  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col justify-center mt-20">
           <Image src="/zynex-text.svg" alt="Zynex Text" width={579} height={133} className="w-1/2" />
         </div>
         <div className="absolute orbitron-400 w-full text-white/50   items-center  bottom-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col justify-center mt-20">
@@ -278,7 +331,43 @@ export default function Home() {
             </div>
             <div className="tracking-widest"  >Merge Your Ideas With Our Digital Creativity</div>
           </div>
+        </div> */}
+        <Canvas dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} camera={{ position: [0, 0, 0], fov: 10 }}>
+          <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
+          <ModelLogo />
+          <OrbitControls enableZoom={true} enablePan={false} enableRotate={false} />
+        </Canvas>
+        <div className="w-full h-full py-40 px-60 flex absolute top-0 left-0">
+          <div className="w-1/3 aspect-square relative">
+          </div>
+          <div className="w-2/3 flex flex-col justify-center gap-10 pl-20">
+            <div className="w-full flex justify-center items-center ">
+              <Image src="/zynex-text.svg" alt="Zynex Text" width={579} height={133} className="w-full" />
+            </div>
+            <div className="w-full text-white/70 font-orbitron-400 tracking-widest text-xl"> Merge Your Ideas With Our Digital Creativity</div>
+            <div className="w-full flex  gap-20">
+              <Link href='/Contact' className="w-fit border overflow-hidden duration-300 hover:text-black flex justify-center items-center group border-white px-10 py-2 text-white rounded-full relative font-orbitron-400 tracking-widest text-xl">
+                <span className="w-0 h-0 bg-white absolute duration-300 z-0 group-hover:w-full group-hover:h-full rounded-full flex"></span>
+                <div className="z-10">
+                  Contact Us
+                </div>
+              </Link>
+              <div className="flex gap-5 text-3xl h-full">
+                <Link href="https://wa.me/94783458889" target="_blank">
+                  <FaWhatsapp className="h-full hover:text-[#AE00FF] duration-300" />
+                </Link>
+                <Link href="https://facebook.com/zynexdev" target="_blank">
+                  <FaFacebook className="h-full hover:text-[#AE00FF] duration-300" />
+                </Link>
+                <Link href="mailto:hello@zynexdev.com" target="_blank">
+                  <AiOutlineMail className="h-full hover:text-[#AE00FF] duration-300" />
+                </Link>
+              </div>
+            </div>
+            <div className="text-sm py-10 w-full text-justify tracking-widest text-white/50">ZYNEX Developments is a boutique web development and digital solutions agency co-founded by Tharusha Damsara and Lakshitha. We believe in delivering high-quality services at affordable prices. Our team combines creativity, technical expertise, and a client-focused approach to build products that stand out.</div>
+          </div>
         </div>
+
       </div>
 
 
@@ -288,7 +377,7 @@ export default function Home() {
         {/* Sticky Canvas Container */}
         <div id="model-container" className="sticky top-0 h-screen w-full overflow-hidden z-0">
           <div className="absolute inset-0 z-3">
-            <Canvas camera={{ position: [0, 0, 0], fov: 30 }}>
+            <Canvas dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ position: [0, 0, 0], fov: 30 }}>
               <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
               <pointLight
                 color="#AE00FF"

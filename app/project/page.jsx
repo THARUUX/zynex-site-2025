@@ -4,51 +4,29 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Canvas } from '@react-three/fiber';
+import { Stage, OrbitControls, useGLTF } from '@react-three/drei';
+import ModelLogo from '@/components/ModelLogo';
 
 gsap.registerPlugin(ScrollTrigger);
 
+function Macbook(props) {
+  const { scene } = useGLTF('/macbook.glb');
+  return <primitive object={scene} {...props} />;
+}
+
 export default function ProjectPage() {
-  const animatedBoxRef = useRef(null);
-
-  useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: animatedBoxRef.current,
-        start: 'top center',
-        end: 'bottom center',
-        scrub: true,
-        markers: true, // Set to true for debugging scroll positions
-      },
-    });
-
-    tl.to(animatedBoxRef.current, {
-      x: 500,   
-      rotation: 360,
-      duration: 1,
-      ease: 'none',
-    });
-
-    // Cleanup function for ScrollTrigger
-    return () => {
-      tl.kill(); // Kill the timeline and its associated ScrollTrigger
-    };
-  }, []);
 
   return (
     <div style={{ height: '200vh', padding: '100px 0' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '400px' }}>Scroll down to see the animation!</h1>
-      <div
-        ref={animatedBoxRef}
-        style={{
-          width: '100px',
-          height: '100px',
-          backgroundColor: 'blue',
-          margin: '0 auto',
-          borderRadius: '10px',
-        }}
-      ></div>
+
       <div style={{ height: '100vh', marginTop: '200px', textAlign: 'center' }}>
-        <h2>More content below</h2>
+        <Canvas camera={{ position: [0, 0, 5], fov: 50 }} style={{ height: '500px', width: '100%' }}>
+          <Stage environment="city" intensity={0.6}>
+            <ModelLogo />
+          </Stage>
+          <OrbitControls enableZoom={false} />
+        </Canvas>
       </div>
     </div>
   );
