@@ -80,7 +80,7 @@ export default function BackgroundMusic() {
       </audio>
 
       <button
-        onClick={toggleMusic}
+        onClick={(e) => { e.stopPropagation(); toggleMusic(); }}
         className="fixed bottom-6 right-6 z-50 bg-black/70 text-white px-4 py-2 rounded-full backdrop-blur-md"
       >
         {playing ? "🔊 Mute" : "🔇 Play"}

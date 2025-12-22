@@ -592,7 +592,7 @@ export default function Home() {
                 <p className="text-white/60 text-lg max-w-2xl mx-auto">Take a look at some of the projects we've brought to life. Our portfolio showcases websites, systems, and digital campaigns designed for real results.</p>
               </div>
 
-              <div className="flex flex-col lg:flex-row gap-10 items-start">
+              <div className="flex flex-col lg:flex-row gap-10 items-center justify-center mt-10">
                 {/* Left Side - Project Filters */}
                 <div className="flex flex-col gap-4 w-full lg:w-1/4">
                   {[
