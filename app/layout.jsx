@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`antialiased w-full max-w-screen overflow-hidden min-h-screen relative`}
+        className={`antialiased w-full max-w-screen overflow-x-hidden min-h-screen relative`}
         suppressHydrationWarning
       >
         {/* Splash Screen */}
