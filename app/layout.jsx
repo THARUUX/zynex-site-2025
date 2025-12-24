@@ -44,14 +44,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`antialiased w-full min-h-screen relative`}
+        className={`antialiased w-full max-w-screen overflow-hidden min-h-screen relative`}
         suppressHydrationWarning
       >
         {/* Splash Screen */}
         {showSplash && <SplashScreen finishLoading={finishLoading} />}
 
         {/* Main Content */}
-        <div className="relative z-10 w-full min-h-screen flex flex-col">
+        <div className="relative z-10 w-full min-h-screen  flex flex-col">
 
           {isLoading ? (
             <div className="flex items-center justify-center h-screen w-full fixed top-0 left-0 bg-white z-50">

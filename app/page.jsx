@@ -332,27 +332,32 @@ export default function Home() {
             <div className="tracking-widest"  >Merge Your Ideas With Our Digital Creativity</div>
           </div>
         </div> */}
-        <Canvas dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} camera={{ position: [0, 0, 0], fov: 10 }}>
+        <Canvas className="hidden md:block" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} camera={{ position: [0, 0, 0], fov: 10 }}>
           <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
           <ModelLogo />
           <OrbitControls enableZoom={true} enablePan={false} enableRotate={false} />
         </Canvas>
-        <div className="w-full h-full py-40 px-60 flex absolute top-0 left-0">
-          <div className="w-1/3 aspect-square relative">
+        <Canvas className="md:hidden" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} camera={{ position: [0, 0, 0], fov: 20 }}>
+          <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
+          <ModelLogo />
+          <OrbitControls enableZoom={true} enablePan={false} enableRotate={false} />
+        </Canvas>
+        <div className="w-full h-full md:py-40 md:px-60 flex absolute top-0 left-0 p-5 md:p-0">
+          <div className="w-1/3 aspect-square relative hidden md:block">
           </div>
-          <div className="w-2/3 flex flex-col justify-center gap-10 pl-20">
+          <div className="w-full md:w-2/3 flex flex-col justify-end mb-5 md:mb-0 md:justify-center gap-5 md:gap-10 md:pl-20">
             <div className="w-full flex justify-center items-center ">
               <Image src="/zynex-text.svg" alt="Zynex Text" width={579} height={133} className="w-full" />
             </div>
-            <div className="w-full text-white/70 font-orbitron-400 tracking-widest text-xl"> Merge Your Ideas With Our Digital Creativity</div>
-            <div className="w-full flex  gap-20">
+            <div className="w-full text-white/70 font-orbitron-400 tracking-widest text-sm md:text-xl"> Merge Your Ideas With Our Digital Creativity</div>
+            <div className="w-full flex  gap-5 md:gap-20">
               <Link href='/Contact' className="w-fit border overflow-hidden duration-300 hover:text-black flex justify-center items-center group border-white px-10 py-2 text-white rounded-full relative font-orbitron-400 tracking-widest text-xl">
                 <span className="w-0 h-0 bg-white absolute duration-300 z-0 group-hover:w-full group-hover:h-full rounded-full flex"></span>
-                <div className="z-10">
+                <div className="z-10 text-sm md:text-base">
                   Contact Us
                 </div>
               </Link>
-              <div className="flex gap-5 text-3xl h-full">
+              <div className="flex gap-5 text-sm md:text-3xl h-full">
                 <Link href="https://wa.me/94783458889" target="_blank">
                   <FaWhatsapp className="h-full hover:text-[#AE00FF] duration-300" />
                 </Link>
@@ -364,7 +369,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="text-sm py-10 w-full text-justify tracking-widest text-white/50">ZYNEX Developments is a boutique web development and digital solutions agency co-founded by Tharusha Damsara and Lakshitha. We believe in delivering high-quality services at affordable prices. Our team combines creativity, technical expertise, and a client-focused approach to build products that stand out.</div>
+            <div className="text-xs z-10 md:text-sm py-10 w-full text-justify tracking-widest text-white/50">ZYNEX Developments is a boutique web development and digital solutions agency founded by Gen-Z. We believe in delivering high-quality services at affordable prices. Our team combines creativity, technical expertise, and a client-focused approach to build products that stand out.</div>
           </div>
         </div>
 
@@ -377,7 +382,30 @@ export default function Home() {
         {/* Sticky Canvas Container */}
         <div id="model-container" className="sticky top-0 h-screen w-full overflow-hidden z-0">
           <div className="absolute inset-0 z-3">
-            <Canvas dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ position: [0, 0, 0], fov: 30 }}>
+            <Canvas className="hidden md:block" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ position: [0, 0, 0], fov: 30 }}>
+              <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
+              <pointLight
+                color="#AE00FF"
+                intensity={5}
+                position={[0, 0, 0]}
+                distance={10}
+                decay={2}
+                castShadow={true}
+              />
+              <pointLight
+                color="#4000FF"
+                intensity={5}
+                position={[5, 5, 5]}
+                distance={100}
+                decay={2}
+                castShadow={true}
+              />
+
+              <Model />
+              <MoveCamera />
+              <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
+            </Canvas>
+            <Canvas className="md:hidden" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ position: [0, 0, 0], fov: 50 }}>
               <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
               <pointLight
                 color="#AE00FF"
@@ -402,10 +430,11 @@ export default function Home() {
             </Canvas>
           </div>
 
-          <div id="sec-welcome" className="w-full h-full absolute  left-0 flex flex-col gap-5 items-center justify-center z-4 backdrop-blur-sm pointer-events-auto">
-            <div ref={welcomeTextRef} className="w-full flex -top-50 flex-col justify-center items-center relative">
-              <div className="w-full text-center orbitron-400 text-white tracking-[10] text-5xl">WELCOME TO</div>
-              <div className="w-full text-center orbitron-400 text-white tracking-[10] text-7xl">ZYNEX DEVELOPMENTS</div>
+          <div id="sec-welcome" className="w-full h-full absolute p-5 left-0 flex flex-col gap-5 items-center justify-center z-4 backdrop-blur-xs md:backdrop-blur-sm pointer-events-auto">
+            <div ref={welcomeTextRef} className="w-full flex gap-5 -top-50 flex-col justify-center items-center relative">
+              <div className="w-full text-center orbitron-400 text-white tracking-[10] text-base md:text-5xl">WELCOME TO</div>
+              <div className="w-full text-center orbitron-400 text-white tracking-[10] hidden md:block text-7xl">ZYNEX DEVELOPMENTS</div>
+              <Image src="/zynex-text.svg" alt="Zynex Text" width={579} height={133} className="md:hidden " />
             </div>
           </div>
 
@@ -419,29 +448,62 @@ export default function Home() {
 
 
           {/* Section 2: What We Do */}
-          <div id="section-2" className="w-full min-h-screen flex flex-col gap-20 items-center justify-center py-30 px-20 ">
+          <div id="section-2" className="w-full min-h-screen flex flex-col gap-20 items-center justify-center p-5 md:py-30 md:px-20 ">
             <div className="flex flex-col gap-5 w-full items-center">
-              <div className="w-full text-center orbitron-400 text-white tracking-[10] text-5xl">WHAT WE DO</div>
-              <div className="text-center orbitron-400 text-white w-1/2 text-md">At <span className="text-[#AE00FF]">ZYNEX</span>, we specialize in turning ideas into reality. From designing intuitive interfaces to developing robust software, we handle every stage of the process. Our team also manages the deployment, ensuring your product is seamlessly launched and fully supported. We deliver tailored, high-quality solutions that help your business thrive.</div>
+              <div className="w-full md:text-center orbitron-400 text-white tracking-[10] text-3xl md:text-5xl">WHAT WE DO</div>
+              <div className="text-justify md:text-center orbitron-400 text-white md:w-1/2 w-full text-xs md:text-sm text-white/70">At <span className="text-[#AE00FF]">ZYNEX</span>, we specialize in turning ideas into reality. From designing intuitive interfaces to developing robust software, we handle every stage of the process. Our team also manages the deployment, ensuring your product is seamlessly launched and fully supported. We deliver tailored, high-quality solutions that help your business thrive.</div>
             </div>
-            <div className="w-full flex flex-wrap justify-around gap-10">
+            <div className="min-w-[screen] overflow-auto w-full relative flex flex-col md:flex-row justify-around">
 
-              <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-1/4 backdrop-blur-[10px]">
-                <div className="w-full z-2 orbitron-400 text-white tracking-[10] text-xl border-b border-white/20 py-5 px-5 flex gap-5 items-center"><MdOutlineDevices className="text-7xl text-[#AE00FF]" /> WEB DEVELOPMENT</div>
-                <div className="p-5 z-2 text-center text-md"> Futuristic, responsive websites built with modern technologies.</div>
+              <Link href="/web-development" className="w-full border-t border-b border-white/40 py-10 text-center text-xl md:backdrop-blur-xs flex flex-col">
+                <div className="w-full text-center orbitron-400 text-white tracking-[3] text-xl md:text-xl">Web Development</div>
+              </Link>
+              <Link href="/system-development" className="w-full border-t border-b border-white/40 py-10 text-center text-xl md:backdrop-blur-xs flex flex-col">
+                <div className="w-full text-center orbitron-400 text-white tracking-[3] text-xl md:text-xl">System Development</div>
+              </Link>
+              <Link href="/digital-marketing" className="w-full border-t border-b border-white/40 py-10 text-center text-xl md:backdrop-blur-xs flex flex-col">
+                <div className="w-full text-center orbitron-400 text-white tracking-[3] text-xl md:text-xl">Digital Marketing</div>
+              </Link>
+              <Link href="/graphic-designing" className="w-full border-t border-b border-white/40 py-10 text-center text-xl md:backdrop-blur-xs flex flex-col">
+                <div className="w-full text-center orbitron-400 text-white tracking-[3] text-xl md:text-xl">Graphic Designing</div>
+              </Link>
+
+              {/* <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-full md:w-1/4 backdrop-blur-[10px]">
+                <div className="w-full z-2 orbitron-400 text-white tracking-widest md:tracking-[10] text-base md:text-xl border-b border-white/20 py-2 px-5 flex gap-5 md:gap-5 items-center">
+                  <MdOutlineDevices className="text-3xl md:text-7xl text-[#AE00FF]" /> 
+                  <div className=" overflow-hidden">
+                    Web Development
+                  </div>
+                </div>
+                <div className="p-5 z-2 text-center text-sm md:text-base text-white/70"> Futuristic, responsive websites built with modern technologies.</div>
               </CardSpotlight>
-              <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-1/4 backdrop-blur-[10px]">
-                <div className="w-full z-2 orbitron-400 text-white tracking-[10] text-xl border-b border-white/20 py-2 px-5 flex gap-5 items-center"> <BiCategory className="text-8xl text-[#AE00FF]" /> System Development</div>
-                <div className="p-5 z-2 text-center text-md">Custom systems for managing business operations efficiently.</div>
+              <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-full md:w-1/4 backdrop-blur-[10px]">
+                <div className="w-full z-2 orbitron-400 text-white tracking-widest md:tracking-[10] text-base md:text-xl border-b border-white/20 py-2 px-5 flex gap-5 md:gap-5 items-center">
+                  <BiCategory className="text-4xl md:text-8xl text-[#AE00FF]" /> 
+                  <div className=" overflow-hidden">
+                    System Development
+                  </div>
+                </div>
+                <div className="p-5 z-2 text-center text-sm md:text-base text-white/70">Custom systems for managing business operations efficiently.</div>
               </CardSpotlight>
-              <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-1/4 backdrop-blur-[10px]">
-                <div className="w-full z-2 orbitron-400 text-white tracking-[10] text-xl border-b border-white/20 py-5 px-5 flex gap-5 items-center"> <GrAnnounce className="text-6xl text-[#AE00FF]" /> Digital Marketing</div>
-                <div className="p-5 z-2 text-center text-md">Reach more customers with smart online advertising. </div>
+              <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-full md:w-1/4 backdrop-blur-[10px]">
+                <div className="w-full z-2 orbitron-400 text-white tracking-widest md:tracking-[10] text-base md:text-xl border-b border-white/20 py-2 px-5 flex gap-5 md:gap-5 items-center">
+                  <GrAnnounce className="text-3xl md:text-6xl text-[#AE00FF]" /> 
+                  <div className=" overflow-hidden">
+                    Digital Marketing
+                  </div>
+                </div>
+                <div className="p-5 z-2 text-center text-sm md:text-base text-white/70">Reach more customers with smart online advertising. </div>
               </CardSpotlight>
-              <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-1/4 backdrop-blur-[10px]">
-                <div className="w-full z-2 orbitron-400 text-white tracking-[10] text-xl border-b border-white/20 py-5 px-8 flex gap-8 items-center"> <SiMaterialdesignicons className="text-6xl text-[#AE00FF]" /> Graphic Designing</div>
-                <div className="p-5 z-2 text-center text-md">Logos, banners, and full brand identity for your business.</div>
-              </CardSpotlight>
+              <CardSpotlight className="bg-white/20 rounded-2xl border-white/20 border flex flex-col w-full md:w-1/4 backdrop-blur-[10px]">
+                <div className="w-full z-2 orbitron-400 text-white tracking-widest md:tracking-[10] text-base md:text-xl border-b border-white/20 py-2 px-8 flex gap-5 md:gap-8 items-center">
+                  <SiMaterialdesignicons className="text-3xl md:text-6xl text-[#AE00FF]" /> 
+                  <div className=" overflow-hidden">
+                    Graphic Designing
+                  </div>
+                 </div>
+                <div className="p-5 z-2 text-center text-sm md:text-base text-white/70">Logos, banners, and full brand identity for your business.</div>
+              </CardSpotlight> */}
             </div>
           </div>
 
@@ -449,12 +511,12 @@ export default function Home() {
           <div className="w-full min-h-screen py-20 px-4 md:px-20 relative">
             <div className="absolute inset-0  to-transparent" />
             <div className="max-w-7xl mx-auto relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="orbitron-400 text-white tracking-[10px] text-4xl md:text-5xl mb-4">WHY CHOOSE US</h2>
-                <p className="text-white/60 text-lg max-w-2xl mx-auto">Discover what makes ZYNEX the perfect partner for your digital journey</p>
+              <div className="md:text-center mb-16">
+                <h2 className="orbitron-400 text-white tracking-[10px] text-3xl md:text-5xl mb-4">WHY CHOOSE US</h2>
+                <p className="text-white/60 text-xs md:text-sm max-w-2xl mx-auto">Discover what makes ZYNEX the perfect partner for your digital journey</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                <div className="relative h-[500px] w-full max-w-[400px] mx-auto ">
+                <div className="relative  min-h-[80vh] w-full max-w-[400px] mx-auto ">
                   <AnimatedList delay={2000}>
                     {[
                       { name: "Innovative Solutions", description: "Cutting-edge technology stack", icon: "🚀", color: "#AE00FF", time: "Always" },
@@ -496,15 +558,15 @@ export default function Home() {
                 <div className="flex flex-col gap-8">
                   <CardSpotlight className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10">
                     <h3 className="orbitron-400 z-2 relative text-white text-2xl mb-4">Expert Team</h3>
-                    <p className="text-white/70 z-2 relative">Our team consists of seasoned professionals with years of experience in web development, mobile apps, and digital solutions. We bring your vision to life with precision and creativity.</p>
+                    <p className="text-white/70 text-sm md:text-base z-2 relative">Our team consists of seasoned professionals with years of experience in web development, mobile apps, and digital solutions. We bring your vision to life with precision and creativity.</p>
                   </CardSpotlight>
                   <CardSpotlight className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10">
                     <h3 className="orbitron-400 z-2 relative text-white text-2xl mb-4">Modern Technologies</h3>
-                    <p className="text-white/70 z-2 relative">We stay ahead of the curve by using the latest frameworks and tools including React, Next.js, Three.js, and more to deliver cutting-edge solutions.</p>
+                    <p className="text-white/70 text-sm md:text-base z-2 relative">We stay ahead of the curve by using the latest frameworks and tools including React, Next.js, Three.js, and more to deliver cutting-edge solutions.</p>
                   </CardSpotlight>
                   <CardSpotlight className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10">
                     <h3 className="orbitron-400 z-2 relative text-white text-2xl mb-4">Results Driven</h3>
-                    <p className="text-white/70 z-2 relative">Every project we undertake is focused on achieving measurable results that help your business grow and succeed in the digital landscape.</p>
+                    <p className="text-white/70 text-sm md:text-base z-2 relative">Every project we undertake is focused on achieving measurable results that help your business grow and succeed in the digital landscape.</p>
                   </CardSpotlight>
                 </div>
               </div>
@@ -512,22 +574,22 @@ export default function Home() {
           </div>
 
           <div className="w-full min-h-screen py-20 px-4 md:px-30 relative">
-            <div className="text-center mb-30">
-              <h2 className="orbitron-400 text-white tracking-[10px] text-4xl md:text-5xl mb-4">OUR ICONIC TECHNOLOGY</h2>
-              <p className="text-white/60 text-lg max-w-2xl mx-auto">Bringing Next Level Futuristic Experiences to the Web – A First in Sri Lanka</p>
+            <div className="md:text-center md:mb-30 mb-10">
+              <h2 className="orbitron-400 text-white tracking-[10px] text-3xl md:text-5xl mb-4">OUR ICONIC TECHNOLOGY</h2>
+              <p className="text-white/60 text-xs md:text-sm max-w-2xl mx-auto">Bringing Next Level Futuristic Experiences to the Web – A First in Sri Lanka</p>
             </div>
-            <div className="w-full flex-col flex sm:flex-row text-md text-white/70 h-full items-center">
+            <div className="w-full flex-col flex sm:flex-row text-base text-white/70 h-full items-center">
               <div className="w-full sm:w-1/2 flex flex-col gap-10 items-center">
-                <div className="text-justify ">
+                <div className="text-justify  text-sm md:text-base">
                   At ZYNEX Developments, we are pioneers in implementing interactive 3D models on websites using Three.js. This technology allows your visitors to engage with products, designs, or concepts in an immersive way that is rarely offered in Sri Lanka. Few companies can deliver this level of innovation, and we take pride in being one of the leaders.
                 </div>
-                <div className="text-justify">
+                <div className="text-justify text-sm md:text-base">
                   Coupled with sleek, cutting-edge UI designs, this creates a digital experience that is rare in Sri Lanka and sets your brand apart.
                 </div>
-                <div className="flex gap-20 text-7xl py-20 w-full justify-center">
-                  <SiNextdotjs className="text-7xl" />
-                  <TbBrandThreejs className="text-7xl" />
-                  <SiBlender className="text-7xl" />
+                <div className="flex gap-20 text-7xl md:py-20 py-10 w-full justify-center">
+                  <SiNextdotjs className="text-5xl" />
+                  <TbBrandThreejs className="text-5xl" />
+                  <SiBlender className="text-5xl" />
                 </div>
               </div>
             </div>
@@ -537,9 +599,9 @@ export default function Home() {
           <div className="w-full min-h-screen py-20 px-4 md:px-20 relative">
             <div className="absolute inset-0  " />
             <div className="max-w-7xl mx-auto relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="orbitron-400 text-white tracking-[10px] text-4xl md:text-5xl mb-4">OUR PROCESS</h2>
-                <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we follow a proven development process</p>
+              <div className="md:text-center mb-16">
+                <h2 className="orbitron-400 text-white tracking-[10px] text-3xl md:text-5xl mb-4">OUR PROCESS</h2>
+                <p className="text-white/60 text-xs md:text-base max-w-2xl mx-auto">From concept to launch, we follow a proven development process</p>
               </div>
               <TracingBeam className="px-6">
                 <div className="max-w-2xl mx-auto antialiased pt-4 relative">
@@ -575,7 +637,7 @@ export default function Home() {
                         {item.badge}
                       </span>
                       <h3 className="orbitron-400 text-2xl text-white mb-4">{item.title}</h3>
-                      <p className="text-white/70 text-lg leading-relaxed">{item.description}</p>
+                      <p className="text-white/70 text-base md:text-base leading-relaxed">{item.description}</p>
                     </div>
                   ))}
                 </div>
@@ -587,9 +649,9 @@ export default function Home() {
           <div className="w-full min-h-screen py-20 px-4 md:px-20 relative overflow-hidden">
             <div className="absolute inset-0 pointer-events-none" />
             <div className="max-w-7xl mx-auto relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="orbitron-400 text-white tracking-[10px] text-4xl md:text-5xl mb-4">RECENT PROJECTS</h2>
-                <p className="text-white/60 text-lg max-w-2xl mx-auto">Take a look at some of the projects we've brought to life. Our portfolio showcases websites, systems, and digital campaigns designed for real results.</p>
+              <div className="md:text-center mb-16">
+                <h2 className="orbitron-400 text-white tracking-[10px] text-3xl md:text-5xl mb-4">RECENT PROJECTS</h2>
+                <p className="text-white/60 text-xs md:text-base max-w-2xl mx-auto">Take a look at some of the projects we've brought to life. Our portfolio showcases websites, systems, and digital campaigns designed for real results.</p>
               </div>
 
               <div className="flex flex-col lg:flex-row gap-10 items-center justify-center mt-10">
@@ -622,7 +684,7 @@ export default function Home() {
                       initial={{ opacity: 0, x: -50 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8 }}
-                      className="designer text-[8vw] lg:text-[6vw] font-bold text-white/10 leading-none"
+                      className="designer hidden md:block text-[8vw] lg:text-[6vw] font-bold text-white/10 leading-none"
                       style={{ fontFamily: "'Designer', sans-serif" }}
                     >
                       THARUUX
@@ -634,10 +696,10 @@ export default function Home() {
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative ml-auto w-full lg:w-3/4 aspect-video bg-gradient-to-br from-white/5 to-white/0 rounded-2xl border border-white/10 backdrop-blur-md overflow-hidden shadow-2xl shadow-[#AE00FF]/10"
+                    className="relative ml-auto w-full lg:w-3/4 md:aspect-video bg-gradient-to-br from-white/5 to-white/0 rounded-2xl border border-white/10 backdrop-blur-md overflow-hidden shadow-2xl shadow-[#AE00FF]/10"
                   >
                     {/* Laptop Mockup */}
-                    <div className="absolute inset-0 flex items-center justify-center p-8">
+                    <div className="md:absolute inset-0 flex items-center justify-center pt-12 pb-20  p-8">
                       <div className="relative w-full max-w-md">
                         {/* Laptop Screen */}
                         <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-lg p-1">
@@ -665,7 +727,7 @@ export default function Home() {
                     </div>
 
                     {/* Technologies Used - Inside Glossy Box */}
-                    <div className="absolute bottom-4 left-4 flex items-center gap-3">
+                    <div className="absolute bottom-8 left-4 flex items-center gap-3">
                       <span className="text-white/40 text-xs orbitron-400 tracking-wider">BUILT WITH</span>
                       <div className="flex items-center gap-2">
                         <motion.div
@@ -704,9 +766,9 @@ export default function Home() {
             <div className="absolute inset-0  pointer-events-none" />
             <div className="absolute w-[500px] h-[500px] rounded-full blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
             <div className="max-w-7xl mx-auto relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="orbitron-400 text-white tracking-[10px] text-4xl md:text-5xl mb-4">TESTIMONIALS</h2>
-                <p className="text-white/60 text-lg max-w-2xl mx-auto">Hear what our clients have to say about working with us</p>
+              <div className="md:text-center  md:mb-16">
+                <h2 className="orbitron-400 text-white tracking-[10px] text-3xl md:text-5xl mb-4">TESTIMONIALS</h2>
+                <p className="text-white/60 text-xs md:text-sm max-w-2xl mx-auto">Hear what our clients have to say about working with us</p>
               </div>
               <AnimatedTestimonials
                 testimonials={[

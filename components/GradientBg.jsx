@@ -36,7 +36,7 @@ export default function GradientBg() {
 
       {/* Main animated gradient blob */}
       <motion.div
-        className="w-100 h-50 bg-gradient-to-br from-[#AE00FF] to-[#4000FF] absolute top-1/2 left-2/6 transform -translate-x-1/2 -translate-y-1/2 rounded-full z-1 pointer-events-none"
+        className="w-50 md:w-100 h-40 md:h-50 bg-gradient-to-br from-[#AE00FF] to-[#4000FF] absolute top-1/2 left-2/6 transform -translate-x-1/2 -translate-y-1/2 rounded-full z-1 pointer-events-none"
         style={{ x: moveX, y: moveY }}
         animate={{
           scale: [1, 1.15, 1],
@@ -50,7 +50,7 @@ export default function GradientBg() {
         }}
       />
       <motion.div
-        className="w-100 h-100 bg-gradient-to-br from-[#AE00FF] to-[#AE00FF] absolute top-1/2 left-3/6 transform -translate-x-1/2 -translate-y-1/2 rounded-full z-1 pointer-events-none"
+        className="w-50 md:w-100 h-40 md:h-50 bg-gradient-to-br from-[#AE00FF] to-[#AE00FF] absolute top-1/2 left-3/6 transform -translate-x-1/2 -translate-y-1/2 rounded-full z-1 pointer-events-none"
         style={{ x: moveX, y: moveY }}
         animate={{
           scale: [1, 1.15, 1],
