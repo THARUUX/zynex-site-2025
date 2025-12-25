@@ -403,7 +403,6 @@ export default function Home() {
 
               <Model />
               <MoveCamera />
-              <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
             </Canvas>
             <Canvas className="md:hidden" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ position: [0, 0, 0], fov: 50 }}>
               <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
@@ -426,7 +425,6 @@ export default function Home() {
 
               <Model />
               <MoveCamera />
-              <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
             </Canvas>
           </div>
 
