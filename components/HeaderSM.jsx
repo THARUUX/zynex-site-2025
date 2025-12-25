@@ -56,8 +56,8 @@ export default function HeaderSM() {
 
     return (
         <div
-            className="w-full max-w-screen bg-white/20 backdrop-blur-[2px] fixed z-40 top-0 left-0 right-0 overflow-hidden h-16 block md:hidden"
-            style={{ clipPath: "polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)" }}
+            className="w-full max-w-screen bg-white/5 backdrop-blur-xs orbitron-400 tracking-widest fixed z-40 top-0 left-0 right-0 overflow-hidden h-16 block md:hidden"
+            // style={{ clipPath: "polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)" }}
             onWheel={handleWheel}
         >
             <motion.div

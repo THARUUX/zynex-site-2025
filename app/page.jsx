@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useLayoutEffect, useRef, useEffect } from "react";
-import Spline from "@splinetool/react-spline";
 import Image from "next/image";
 import { FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
@@ -29,7 +28,6 @@ import FloatingLines from "@/components/ui/FloatingLines";
 gsap.registerPlugin(ScrollTrigger);
 
 import ModelLogo from "@/components/ModelLogo";
-import DarkVeil from "@/components/ui/DarkVeil";
 import LightRays from "@/components/ui/LightRays";
 
 function Model() {
@@ -70,58 +68,55 @@ function Model() {
       duration: 4,
     }, "<");
 
-
-
-
-    // const t2 = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: "#model-container",
-    //     start: "top center",
-    //     end: "bottom center",
-    //     scrub: true,
-    //     markers: true,
-    //   }
-    // })
-
-    // t2.to(modelRef.current.scale, {
-    //   x: 1.5,
-    //   y: 1.5,
-    //   z: 1.5,
-    //   duration: 1,
-    // }).to(modelRef.current.position, {
-    //   x: 2,
-    //   z: 2,
-    //   y: 2,
-    //   duration: 1,
-    // }).to(modelRef.current.rotation, {
-    //   y: Math.PI / 2,
-    //   duration: 1,
-    // }, "0");
-
-    // const tl = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: "#section-2", // Start animating when section 2 comes into view
-    //     start: "top bottom",
-    //     end: "center center",
-    //     scrub: true,
-    //     // markers: true, // Uncomment for debugging
-    //   },
-    // });
-
-    // tl.to(modelRef.current.rotation, {
-    //   y: Math.PI, // Rotate 360 degrees
-    //   duration: 1,
-    // })
-    //   .to(modelRef.current.position, {
-    //     x: 2,
-    //     z: 1,
-    //     duration: 1,
-    //   }, "<"); // Run simultaneously
-
   }, []);
 
   return (
     <primitive object={gltf.scene} ref={modelRef} />
+  );
+}
+
+function ModelSM() {
+  const gltf = useGLTF("/f1.glb");
+  const modelRefSM = useRef();
+
+  useLayoutEffect(() => {
+    if (!modelRefSM.current) return;
+
+    // Initial state
+    modelRefSM.current.position.set(0, 0, 0);
+    modelRefSM.current.rotation.set(0, 0, 0);
+    modelRefSM.current.scale.set(0.5, 0.5, 0.5);
+
+    const t1 = gsap.timeline({
+      scrollTrigger: {
+        ease: "power4.inOut",
+        trigger: "#section-2",
+        start: "top bottom",
+        end: "bottom-=10% bottom",
+        scrub: true,
+        duration: 4,
+      }
+    })
+
+    t1.to(modelRefSM.current.scale, {
+      x: 1,
+      y: 1,
+      z: 1,
+      duration: 4,
+    }).to(modelRefSM.current.position, {
+      x: 0.5,
+      z: 1,
+      y: -1,
+      duration: 4,
+    }, "<").to(modelRefSM.current.rotation, {
+      y: -1,
+      duration: 4,
+    }, "<");
+
+  }, []);
+
+  return (
+    <primitive object={gltf.scene} ref={modelRefSM} />
   );
 }
 
@@ -159,6 +154,72 @@ function MoveCamera() {
   useLayoutEffect(() => {
     // Initial base camera position
     base.current = { x: 0, y: 2, z: 4 };
+
+    camera.position.set(base.current.x, base.current.y, base.current.z);
+    camera.lookAt(0, 0, 0);
+
+    // GSAP controls ONLY base position
+    const t1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#sec-welcome",
+        start: "top center",
+        end: "bottom 20%",
+        scrub: true,
+      },
+      defaults: { ease: "none" },
+    });
+
+    t1.to(base.current, {
+      x: 0,
+      y: -1,
+      z: 4,
+      duration: 1,
+      onUpdate: () => {
+        // GSAP updates base position, R3F updates camera smoothly
+      },
+    });
+
+    return () => t1.kill();
+  }, []);
+
+  return null;
+}
+
+
+function MoveCameraSM() {
+  const { camera } = useThree();
+
+  const mouse = useRef({ x: 0, y: 0 });
+  const target = useRef({ x: 0, y: 0 });
+
+  // GSAP-controlled camera base position
+  const base = useRef({ x: 0, y: 2, z: 4 });
+
+  // Track mouse
+  useEffect(() => {
+    const handleMove = (e) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
+  // Mouse parallax only adds a small offset
+  useFrame(() => {
+    target.current.x = mouse.current.x * 0.3;
+    target.current.y = mouse.current.y * 0.3;
+
+    // Final camera position = GSAP base + mouse offset
+    camera.position.x += ((base.current.x + target.current.x) - camera.position.x) * 0.05;
+    camera.position.y += ((base.current.y + target.current.y) - camera.position.y) * 0.05;
+    camera.position.z += (base.current.z - camera.position.z) * 0.05;
+  });
+
+  useLayoutEffect(() => {
+    // Initial base camera position
+    base.current = { x: 0, y: 0, z: 4 };
 
     camera.position.set(base.current.x, base.current.y, base.current.z);
     camera.lookAt(0, 0, 0);
@@ -267,49 +328,6 @@ export default function Home() {
           className="h-screen w-full"
 
         />
-        {/* <DarkVeil/> */}
-        {/* <FloatingLines
-          className="z-0"
-          linesGradient={[
-            '#AE00FF',
-            '#4000FF',
-            '#AE00FF',
-            '#4000FF',
-            '#AE00FF',
-            '#4000FF',
-            '#AE00FF',
-            '#4000FF',
-          ]}
-          enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[2, 5, 2]}
-          lineDistance={[5, 5, 5]}
-          topWavePosition={{ x: 10.0, y: 0.5, rotate: -0.4 }}
-          middleWavePosition={{ x: 5.0, y: 0.0, rotate: 0.2 }}
-          bottomWavePosition={{ x: 2.0, y: -0.7, rotate: 0.4 }}
-          animationSpeed={1}
-          interactive={true}
-          bendRadius={5.0}
-          bendStrength={-0.5}
-          mouseDamping={0.05}
-          parallax={true}
-          parallaxStrength={0.2}
-          mixBlendMode='screen'
-        /> */}
-        {/* <Canvas dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} camera={{ position: [0, 0, 0], fov: 20 }}>
-          <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
-
-
-          <ModelLogo />
-          <OrbitControls enableZoom={true} enablePan={false} enableRotate={false} />
-        </Canvas> */}
-        {/* Spline Background */}
-        {/* <div className="absolute inset-0 z-0">
-          <Spline
-            scene="https://prod.spline.design/JgBbZB5iZ4n17ePP/scene.splinecode"
-            onLoad={() => setIsLoading(false)}
-          />
-        </div> */}
-
         {/* Overlay gradient */}
         <div className="absolute bottom-0 inset-x-0 z-10 h-80 bg-gradient-to-t from-black to-transparent pointer-events-none" />
 
@@ -404,7 +422,7 @@ export default function Home() {
               <Model />
               <MoveCamera />
             </Canvas>
-            <Canvas className="md:hidden" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ position: [0, 0, 0], fov: 50 }}>
+            <Canvas className="md:hidden" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ position: [0, 0, 0], fov: 30 }}>
               <directionalLight position={[1.61, -1.15, 0.7]} intensity={0.1} />
               <pointLight
                 color="#AE00FF"
@@ -423,8 +441,8 @@ export default function Home() {
                 castShadow={true}
               />
 
-              <Model />
-              <MoveCamera />
+              <ModelSM />
+              <MoveCameraSM />
             </Canvas>
           </div>
 
@@ -674,9 +692,7 @@ export default function Home() {
                   ))}
                 </div>
 
-                {/* Right Side - Project Showcase */}
                 <div className="flex-1 relative">
-                  {/* Project Name Large Text */}
                   <div className="absolute left-0 bottom-1/4 z-10 pointer-events-none">
                     <motion.h3
                       initial={{ opacity: 0, x: -50 }}
@@ -689,17 +705,14 @@ export default function Home() {
                     </motion.h3>
                   </div>
 
-                  {/* Project Showcase Card */}
                   <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="relative ml-auto w-full lg:w-3/4 md:aspect-video bg-gradient-to-br from-white/5 to-white/0 rounded-2xl border border-white/10 backdrop-blur-md overflow-hidden shadow-2xl shadow-[#AE00FF]/10"
                   >
-                    {/* Laptop Mockup */}
                     <div className="md:absolute inset-0 flex items-center justify-center pt-12 pb-20  p-8">
                       <div className="relative w-full max-w-md">
-                        {/* Laptop Screen */}
                         <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-lg p-1">
                           <div className="bg-black rounded-t-md aspect-video overflow-hidden">
                             <Image
@@ -711,20 +724,17 @@ export default function Home() {
                             />
                           </div>
                         </div>
-                        {/* Laptop Base */}
                         <div className="bg-gradient-to-b from-gray-700 to-gray-800 h-3 rounded-b-lg relative">
                           <div className="absolute inset-x-0 -bottom-1 h-1 bg-gray-900 rounded-full mx-auto w-1/4" />
                         </div>
                       </div>
                     </div>
 
-                    {/* Decorative Elements */}
                     <div className="absolute top-4 right-4 flex flex-col items-end gap-1">
                       <span className="text-white/30 text-xs orbitron-400">01</span>
                       <div className="w-20 h-px bg-gradient-to-r from-transparent to-[#AE00FF]/50" />
                     </div>
 
-                    {/* Technologies Used - Inside Glossy Box */}
                     <div className="absolute bottom-8 left-4 flex items-center gap-3">
                       <span className="text-white/40 text-xs orbitron-400 tracking-wider">BUILT WITH</span>
                       <div className="flex items-center gap-2">
@@ -746,7 +756,6 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* View Project Link */}
                     <motion.div
                       whileHover={{ x: 5 }}
                       className="absolute bottom-4 right-4 text-[#AE00FF]/70 text-sm orbitron-400 cursor-pointer hover:text-[#AE00FF] transition-colors flex items-center gap-2"

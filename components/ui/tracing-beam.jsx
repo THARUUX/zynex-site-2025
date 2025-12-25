@@ -35,6 +35,10 @@ export const TracingBeam = ({ children, className }) => {
         }
     );
 
+    const colorTransform = useTransform(scrollYProgress, [0, 0.01], ["var(--purple-500)", "#ffffff"]);
+    const borderTransform = useTransform(scrollYProgress, [0, 0.01], ["var(--purple-600)", "#ffffff"]);
+    const shadowTransform = useTransform(scrollYProgress, [0, 0.01], ["rgba(138, 43, 226, 0.24) 0px 3px 8px", "rgba(0,0,0,0) 0px 0px 0px"]);
+
     return (
         <motion.div
             ref={ref}
@@ -42,28 +46,15 @@ export const TracingBeam = ({ children, className }) => {
         >
             <div className="absolute -left-4 md:-left-20 top-3">
                 <motion.div
-                    transition={{
-                        duration: 0.2,
-                        delay: 0.5,
-                    }}
-                    animate={{
-                        boxShadow:
-                            scrollYProgress.get() > 0
-                                ? "none"
-                                : "rgba(138, 43, 226, 0.24) 0px 3px 8px",
+                    style={{
+                        boxShadow: shadowTransform,
                     }}
                     className="ml-[27px] h-4 w-4 rounded-full border border-netural-200 shadow-sm flex items-center justify-center"
                 >
                     <motion.div
-                        transition={{
-                            duration: 0.2,
-                            delay: 0.5,
-                        }}
-                        animate={{
-                            backgroundColor:
-                                scrollYProgress.get() > 0 ? "white" : "var(--purple-500)",
-                            borderColor:
-                                scrollYProgress.get() > 0 ? "white" : "var(--purple-600)",
+                        style={{
+                            backgroundColor: colorTransform,
+                            borderColor: borderTransform,
                         }}
                         className="h-2 w-2 rounded-full border border-neutral-300 bg-white"
                     />
